@@ -1,11 +1,7 @@
 import { FaCog, FaPlus, FaInfo } from "react-icons/fa";
 
 const iconSize = 25;
-const options = [
-  <FaPlus size={iconSize} />,
-  <FaCog size={iconSize} />,
-  <FaInfo size={iconSize} />,
-];
+const buttonStyling = "m-auto p-3 rounded-full bg-[#213555]"
 
 interface Commands {
   addTodoNote: any
@@ -22,15 +18,13 @@ const SideBar = ({ addTodoNote }: Commands) => {
       {/* List of all the options in the appilcation */}
       <div className="flex flex-col h-1/3">
         {/* Here are button components */}
-        {options.map((option) => (
-          <button
-            onClick={() => {
-              addTodoNote({ title: "new todo", description: "test" })
-            }}
-            className="m-auto p-3 rounded-full bg-[#213555]">
-            {option}
-          </button>
-        ))}
+
+        <button className={buttonStyling} onClick={() => {
+              addTodoNote({ title: "new todo", description: "test" })}}><FaPlus size={iconSize} />
+        </button>
+
+        <button className={buttonStyling}><FaCog size={iconSize} /></button>
+        <button className={buttonStyling}><FaInfo size={iconSize} /></button>
       </div>
     </div>
   );
