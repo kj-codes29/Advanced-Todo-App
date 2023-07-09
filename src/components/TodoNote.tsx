@@ -24,6 +24,7 @@ type TodoProps = {
 // use content editable to edit notes
 
 const TodoNote = ({todoInfo, remove}: TodoProps) => {
+  const [isViewMode, setIsViewMode] = useState<Boolean>(false)
   const [isMenuHidden, setIsMenuHidden] = useState<Boolean>(true)
   const dropDownRef = useRef<HTMLDivElement>(null);
 
@@ -41,16 +42,20 @@ const TodoNote = ({todoInfo, remove}: TodoProps) => {
 
   // check operation before executing
   const noteOperation = (name: string, id: string) => {
-    if (name == 'Delete'){
-      remove(id)
+    switch (name){
+      case 'Delete': remove(id);
+      break;
+      case 'Edit': setIsViewMode(!isViewMode)
+      break;
+      default: console.log('View Mode') 
     }
   }
 
   return (
-    <div className="text-white w-96 h-72 gap-10 rounded-lg">
+    <div className="w-96 h-72 gap-10 rounded-lg">
       {/* Here comes the header of the Todo note / Title */}
       {/* Add options to the todo to be able to modify it */}
-      <div className="flex justify-between font-bold rounded-t-lg p-3 bg-[#D8C4B6] text-[#213555]">
+      <div className={`flex justify-between font-bold rounded-t-lg p-3 bg-[#D8C4B6] ${isViewMode? "text-red-200" : "text-[#213555]"}`}>
         <h1>{todoInfo.title}</h1>
 
         {/* Note options */}
@@ -60,7 +65,7 @@ const TodoNote = ({todoInfo, remove}: TodoProps) => {
           </button>
 
           {/* Drop Down Menu */}
-          <div className={"absolute left-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-[#D8C4B6] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none " + (isMenuHidden? "hidden": "" )} role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
+          <div className={`absolute left-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-[#D8C4B6] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${isMenuHidden? "hidden": ""}`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
             <ul className="">
               {options.map((option, operationIndex) => {
                 return (

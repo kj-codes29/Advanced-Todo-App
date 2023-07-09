@@ -45,7 +45,7 @@ const TodoModal = ({isModalHidden, setIsModalHidden, addTodoNote}: Modal) => {
 
   return (
 
-<div id="authentication-modal" aria-hidden="true" className={"absolute w-full bg-gray-700/50 p-4 h-full " + (isModalHidden? "hidden":"")}>
+<div id="authentication-modal" aria-hidden="true" className={`absolute w-full bg-gray-700/50 p-4 h-full ${isModalHidden? "hidden":""}`}>
     <div ref={modalRef} className="translate-y-1/2 translate-x-full w-full max-w-md max-h-full z-10">
 
         {/* <!-- Modal content --> */}
