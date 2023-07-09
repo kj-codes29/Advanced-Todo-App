@@ -16,6 +16,9 @@ type TodoProps = {
   remove: any
 }
 
+const closedViewMode = "flex justify-between font-bold rounded-t-lg p-3 bg-[#D8C4B6] text-[#213555]"
+const openViewMode = "flex justify-between font-bold rounded-t-lg p-3 bg-black text-white"
+
 // When clicked on view note it pops up to the front
 // the Icon changes to an X
 // When clicked on the X Icon it returns to normal
@@ -24,13 +27,21 @@ type TodoProps = {
 // use content editable to edit notes
 
 const TodoNote = ({todoInfo, remove}: TodoProps) => {
-  const [isViewMode, setIsViewMode] = useState<Boolean>(false)
+  const [viewMode, setViewMode] = useState<string>(closedViewMode)
   const [isMenuHidden, setIsMenuHidden] = useState<Boolean>(true)
   const dropDownRef = useRef<HTMLDivElement>(null);
 
 
   const toggleMenu = () => {
     setIsMenuHidden(!isMenuHidden)
+  }
+
+  const toggleViewMode = () => {
+    if(viewMode == closedViewMode){
+      setViewMode(openViewMode)
+    }else{
+      setViewMode(closedViewMode)
+    }
   }
 
   // close dropdown when clicked anywhere
@@ -45,17 +56,19 @@ const TodoNote = ({todoInfo, remove}: TodoProps) => {
     switch (name){
       case 'Delete': remove(id);
       break;
-      case 'Edit': setIsViewMode(!isViewMode)
+      case 'Edit': toggleViewMode()
       break;
       default: console.log('View Mode') 
     }
+
+    toggleMenu()
   }
 
   return (
     <div className="w-96 h-72 gap-10 rounded-lg">
       {/* Here comes the header of the Todo note / Title */}
       {/* Add options to the todo to be able to modify it */}
-      <div className={`flex justify-between font-bold rounded-t-lg p-3 bg-[#D8C4B6] ${isViewMode? "text-red-200" : "text-[#213555]"}`}>
+      <div className={viewMode}>
         <h1>{todoInfo.title}</h1>
 
         {/* Note options */}
