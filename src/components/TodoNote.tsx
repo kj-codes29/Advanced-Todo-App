@@ -19,7 +19,7 @@ type TodoProps = {
 
 const TodoNote = ({todoInfo, todoIndex, remove}: TodoProps) => {
   const [isMenuHidden, setIsMenuHidden] = useState<Boolean>(true)
-  const dropDownRef = useRef<HTMLButtonElement>(null);
+  const dropDownRef = useRef<HTMLDivElement>(null);
 
 
   const toggleMenu = () => {
@@ -47,8 +47,8 @@ const TodoNote = ({todoInfo, todoIndex, remove}: TodoProps) => {
         <h1>{todoInfo.title}</h1>
 
         {/* Note options */}
-        <div className='relative inline-block text-left'>
-          <button ref={dropDownRef} onClick={ () => toggleMenu()} type='button' id="menu-button" aria-expanded="true" aria-haspopup="true" className='duration-100 ease-in hover:text-[#F5EFE7]'>
+        <div ref={dropDownRef} className='relative inline-block text-left'>
+          <button onClick={ () => toggleMenu()} type='button' id="menu-button" aria-expanded="true" aria-haspopup="true" className='duration-100 ease-in hover:text-[#F5EFE7]'>
             <RiMore2Fill size={iconSize}/>
           </button>
 
