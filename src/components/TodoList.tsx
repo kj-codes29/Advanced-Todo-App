@@ -1,20 +1,34 @@
-import { JSX } from 'react/jsx-runtime'
-import TodoNote from './TodoNote'
+import TodoNote from "./TodoNote";
+import { Todo } from "../models/Todo";
+import Modal from "../models/Modal";
+import TodoModal from "./TodoModal";
 
-const notes: JSX.Element[] = []
+type TodoListProps = {
+  todoNotes: Todo[];
+  removeTodoNote: any;
+  modalProps: Modal;
+};
 
-for (let i = 0; i < 6; i++){
-    notes.push(<TodoNote/>)
-}
-
-const TodoList = () => {
+const TodoList = ({ todoNotes, removeTodoNote, modalProps }: TodoListProps) => {
   return (
-    <div className="bg-[#F5EFE7] grid grid-cols-3 justify-items-center overflow-auto w-screen h-100 p-4 rounded-md">
-        {notes.map(note => {
-            return note
-        })}
-      </div>
-  )
-}
+    <div className="relative bg-[#F5EFE7] grid grid-cols-3 justify-items-center overflow-auto w-screen h-100 p-4">
+      {todoNotes.map((todoNote) => {
+        return (
+          <TodoNote
+            key={todoNote.id}
+            todoInfo={todoNote}
+            remove={removeTodoNote}
+          />
+        );
+      })}
 
-export default TodoList
+      <TodoModal
+        addTodoNote={modalProps.addTodoNote}
+        isModalHidden={modalProps.isModalHidden}
+        setIsModalHidden={modalProps.setIsModalHidden}
+      />
+    </div>
+  );
+};
+
+export default TodoList;
