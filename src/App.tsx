@@ -18,11 +18,17 @@ function App() {
     }
   };
 
+  const removeTodoNote = (index: number) => {
+    const updatedNotes = [...todoNotes]
+    updatedNotes.splice(index, 1)
+    setTodoNotes(updatedNotes)
+  }
+
   return (
     <div className="flex">
       <SideBar addTodoNote={addTodoNote} />
 
-      <TodoList todoNotes={todoNotes} />
+      <TodoList todoNotes={todoNotes} removeTodoNote={removeTodoNote} />
     </div>
   );
 }
