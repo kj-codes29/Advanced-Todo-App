@@ -31,6 +31,7 @@ const TodoModal = ({isModalHidden, setIsModalHidden, addTodoNote}: Modal) => {
   const createNote = (todoContent: Todo) => {
     addTodoNote(todoContent)
     hideModal()
+    setTodoInfo({id: uuidv4(), title: "", description: ""})
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,11 +67,11 @@ const TodoModal = ({isModalHidden, setIsModalHidden, addTodoNote}: Modal) => {
                 <div className="space-y-6">
                     <div>
                         <label className={labelStyle}>Title</label>
-                        <input onChange={(e) => handleInputChange(e)} type="text" name="title" className={inputStyle} placeholder="My new note" required/>
+                        <input onChange={(e) => handleInputChange(e)} type="text" name="title" value={todoInfo.title} className={inputStyle} placeholder="My new note" required/>
                     </div>
                     <div>
                         <label className={labelStyle}>Description</label>
-                        <input onChange={(e) => handleInputChange(e)} type="text" name="description" placeholder="Some description" className={inputStyle}/>
+                        <input onChange={(e) => handleInputChange(e)} type="text" name="description" value={todoInfo.description} placeholder="Some description" className={inputStyle}/>
                     </div>
                     <button onClick={() => createNote(todoInfo)} className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Create Note</button>
                 </div>
