@@ -2,7 +2,7 @@ import { RiMore2Fill } from 'react-icons/ri'
 import { LuFileSpreadsheet, LuFileEdit} from 'react-icons/lu';
 import { TiDocumentDelete} from 'react-icons/ti';
 import { Todo } from '../models/Todo'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 const iconSize: number = 22
 const options= [
@@ -19,14 +19,18 @@ type TodoProps = {
 
 const TodoNote = ({todoInfo, todoIndex, remove}: TodoProps) => {
   const [isMenuHidden, setIsMenuHidden] = useState<Boolean>(true)
+  const dropDownRef = useRef<HTMLButtonElement>(null);
+
 
   const toggleMenu = () => {
-    if(isMenuHidden){
-      setIsMenuHidden(false)
-    }else{
+    setIsMenuHidden(!isMenuHidden)
+  }
+
+  document.addEventListener('mousedown', (e: MouseEvent) => {
+    if(dropDownRef.current && !dropDownRef.current.contains(e.target as Node)){
       setIsMenuHidden(true)
     }
-  }
+  })
 
   // check operation before executing
   const noteOperation = (name: string, index: number) => {
@@ -44,7 +48,7 @@ const TodoNote = ({todoInfo, todoIndex, remove}: TodoProps) => {
 
         {/* Note options */}
         <div className='relative inline-block text-left'>
-          <button onClick={ () => toggleMenu()} type='button' id="menu-button" aria-expanded="true" aria-haspopup="true" className='duration-100 ease-in hover:text-[#F5EFE7]'>
+          <button ref={dropDownRef} onClick={ () => toggleMenu()} type='button' id="menu-button" aria-expanded="true" aria-haspopup="true" className='duration-100 ease-in hover:text-[#F5EFE7]'>
             <RiMore2Fill size={iconSize}/>
           </button>
 
@@ -53,7 +57,8 @@ const TodoNote = ({todoInfo, todoIndex, remove}: TodoProps) => {
             <ul className="">
               {options.map((option, operationIndex) => {
                 return (
-                <li onClick={ () => noteOperation(option.name, todoIndex)} key={operationIndex} className="flex justify-between px-4 py-2 rounded-md text-[#213555] text-sm hover:bg-[#4F709C] hover:text-[#D8C4B6]">
+                <li onClick={ () => noteOperation(option.name, todoIndex)} key={operationIndex} 
+                    className="flex justify-between px-4 py-2 rounded-md text-[#213555] text-sm hover:bg-[#4F709C] hover:text-[#D8C4B6]">
                   <span>{option.name}</span>
                    <span>{option.icon}</span>
                 </li>
