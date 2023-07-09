@@ -1,19 +1,18 @@
 import TodoNote from './TodoNote'
 import { Todo } from '../models/Todo'
 
-interface TodoNotes {
+type TodoNoteProps = {
   todoNotes: Todo[]
   removeTodoNote: any
 }
 
-const TodoList = ({todoNotes, removeTodoNote}:TodoNotes) => {
+const TodoList = ({todoNotes, removeTodoNote}:TodoNoteProps) => {
   return (
-    <div className="bg-[#F5EFE7] grid grid-cols-3 justify-items-center overflow-auto w-screen h-100 p-4 rounded-md">
+    <div className="relative bg-[#F5EFE7] grid grid-cols-3 justify-items-center overflow-auto w-screen h-100 p-4 rounded-md">
       
         {todoNotes.map((todoNote)=> {
             return <TodoNote key={todoNote.id} todoInfo={todoNote} remove={removeTodoNote}/>
         })}
-
       </div>
   )
 }

@@ -1,14 +1,12 @@
 import { FaCog, FaPlus, FaInfo } from "react-icons/fa";
-import { v4 as uuidv4 } from 'uuid';
-
 const iconSize = 25;
 const buttonStyling = "m-auto p-3 rounded-full bg-[#213555]"
 
 interface Commands {
-  addTodoNote: any
+  toggleModal: any
 }
 
-const SideBar = ({ addTodoNote }: Commands) => {
+const SideBar = ({toggleModal }: Commands) => {
   // This components needs to be a side bar with different option
   // It contains the option to create new todo list
   // It has the option to go into settings to customize the look of the app
@@ -20,13 +18,15 @@ const SideBar = ({ addTodoNote }: Commands) => {
       <div className="flex flex-col h-1/3">
         {/* Here are button components */}
 
-        <button className={buttonStyling} onClick={() => {
-              addTodoNote({id: uuidv4() , title: "new todo", description: "test" })}}><FaPlus size={iconSize} />
+        <button className={buttonStyling} data-modal-target="authentication-modal" data-modal-toggle="authentication-modal"
+                onClick={() =>toggleModal()}>
+          <FaPlus size={iconSize} />
         </button>
 
         <button className={buttonStyling}><FaCog size={iconSize} /></button>
         <button className={buttonStyling}><FaInfo size={iconSize} /></button>
       </div>
+
     </div>
   );
 };

@@ -21,6 +21,8 @@ type TodoProps = {
 // When clicked on the X Icon it returns to normal
 // When it is poped in front it can be edited
 
+// use content editable to edit notes
+
 const TodoNote = ({todoInfo, remove}: TodoProps) => {
   const [isMenuHidden, setIsMenuHidden] = useState<Boolean>(true)
   const dropDownRef = useRef<HTMLDivElement>(null);
