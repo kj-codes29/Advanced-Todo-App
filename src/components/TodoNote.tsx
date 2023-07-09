@@ -13,11 +13,15 @@ const options= [
 
 type TodoProps = {
   todoInfo: Todo,
-  todoIndex: number,
   remove: any
 }
 
-const TodoNote = ({todoInfo, todoIndex, remove}: TodoProps) => {
+// When clicked on view note it pops up to the front
+// the Icon changes to an X
+// When clicked on the X Icon it returns to normal
+// When it is poped in front it can be edited
+
+const TodoNote = ({todoInfo, remove}: TodoProps) => {
   const [isMenuHidden, setIsMenuHidden] = useState<Boolean>(true)
   const dropDownRef = useRef<HTMLDivElement>(null);
 
@@ -26,6 +30,7 @@ const TodoNote = ({todoInfo, todoIndex, remove}: TodoProps) => {
     setIsMenuHidden(!isMenuHidden)
   }
 
+  // close dropdown when clicked anywhere
   document.addEventListener('mousedown', (e: MouseEvent) => {
     if(dropDownRef.current && !dropDownRef.current.contains(e.target as Node)){
       setIsMenuHidden(true)
@@ -33,9 +38,9 @@ const TodoNote = ({todoInfo, todoIndex, remove}: TodoProps) => {
   })
 
   // check operation before executing
-  const noteOperation = (name: string, index: number) => {
+  const noteOperation = (name: string, id: string) => {
     if (name == 'Delete'){
-      remove(index)
+      remove(id)
     }
   }
 
@@ -57,8 +62,8 @@ const TodoNote = ({todoInfo, todoIndex, remove}: TodoProps) => {
             <ul className="">
               {options.map((option, operationIndex) => {
                 return (
-                <li onClick={ () => noteOperation(option.name, todoIndex)} key={operationIndex} 
-                    className="flex justify-between px-4 py-2 rounded-md text-[#213555] text-sm hover:bg-[#4F709C] hover:text-[#D8C4B6]">
+                <li onClick={ () => noteOperation(option.name, todoInfo.id)} key={operationIndex} 
+                    className="flex justify-between px-4 py-2 rounded-md text-[#213555] text-sm hover:bg-[#4F709C] hover:text-[#D8C4B6] hover:cursor-pointer">
                   <span>{option.name}</span>
                    <span>{option.icon}</span>
                 </li>

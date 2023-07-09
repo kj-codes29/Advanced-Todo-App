@@ -18,9 +18,9 @@ function App() {
     }
   };
 
-  const removeTodoNote = (index: number) => {
-    const updatedNotes = [...todoNotes]
-    updatedNotes.splice(index, 1)
+  const removeTodoNote = (id: string) => {
+    const currentNotes = [...todoNotes]
+    const updatedNotes = currentNotes.filter(notes => notes.id != id)
     setTodoNotes(updatedNotes)
   }
 

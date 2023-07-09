@@ -1,4 +1,5 @@
 import { FaCog, FaPlus, FaInfo } from "react-icons/fa";
+import { v4 as uuidv4 } from 'uuid';
 
 const iconSize = 25;
 const buttonStyling = "m-auto p-3 rounded-full bg-[#213555]"
@@ -20,7 +21,7 @@ const SideBar = ({ addTodoNote }: Commands) => {
         {/* Here are button components */}
 
         <button className={buttonStyling} onClick={() => {
-              addTodoNote({ title: "new todo", description: "test" })}}><FaPlus size={iconSize} />
+              addTodoNote({id: uuidv4() , title: "new todo", description: "test" })}}><FaPlus size={iconSize} />
         </button>
 
         <button className={buttonStyling}><FaCog size={iconSize} /></button>
