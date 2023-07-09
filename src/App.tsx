@@ -2,7 +2,7 @@ import { useState } from "react";
 import SideBar from "./components/SideBar";
 import TodoList from "./components/TodoList";
 import { Todo } from "./models/Todo";
-import TodoModal from "./components/TodoModal";
+import Modal from "./models/Modal";
 
 // This app contains a multiple todo lists
 // each list is a components
@@ -12,7 +12,7 @@ import TodoModal from "./components/TodoModal";
 
 function App() {
   const [todoNotes, setTodoNotes] = useState<Todo[]>([]);
-  const [isModalHidden, setIsModalHidden] = useState<Boolean>(false);
+  const [isModalHidden, setIsModalHidden] = useState<Boolean>(true);
 
   const toggleModal = () => {
     setIsModalHidden(!isModalHidden);
@@ -30,13 +30,13 @@ function App() {
     setTodoNotes(updatedNotes);
   };
 
+  const modalProps: Modal = {isModalHidden, setIsModalHidden, addTodoNote}
+
   return (
     <div className="flex">
       <SideBar toggleModal={toggleModal} />
 
-      <TodoList todoNotes={todoNotes} removeTodoNote={removeTodoNote} />
-
-      <TodoModal addTodoNote={addTodoNote} isModalHidden={isModalHidden} setIsModalHidden={setIsModalHidden}/>
+      <TodoList todoNotes={todoNotes} removeTodoNote={removeTodoNote} modalProps={modalProps} />
     </div>
   );
 }

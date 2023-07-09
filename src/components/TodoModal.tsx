@@ -1,18 +1,19 @@
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { v4 as uuidv4 } from 'uuid';
 import { Todo } from "../models/Todo";
-
-type modalProps = {
-    isModalHidden: Boolean,
-    setIsModalHidden: any
-    addTodoNote: any
-}
+import Modal from "../models/Modal";
 
 const inputStyle = "bg-gray-600 border border-gray-500 text-gray-900 placeholder-gray-400 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
 const labelStyle = "block mb-2 text-sm font-medium text-white"
 
-const TodoModal = ({isModalHidden, setIsModalHidden, addTodoNote}: modalProps) => {
+
+const TodoModal = ({isModalHidden, setIsModalHidden, addTodoNote}: Modal) => {
     const modalRef = useRef<HTMLDivElement>(null);
+    const [todoInfo, setTodoInfo] = useState<Todo>({
+        id: uuidv4(),
+        title: "",
+        description: ""
+    })
 
     const hideModal = () => {
         if(!isModalHidden){
@@ -31,6 +32,15 @@ const TodoModal = ({isModalHidden, setIsModalHidden, addTodoNote}: modalProps) =
     addTodoNote(todoContent)
     hideModal()
   }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setTodoInfo(prevTodoInfo => ({
+      ...prevTodoInfo,
+      [name]: value,
+    }));
+  };
+  
 
   return (
 
@@ -52,17 +62,17 @@ const TodoModal = ({isModalHidden, setIsModalHidden, addTodoNote}: modalProps) =
             <div className="px-6 py-6">
                 <h3 className="mb-4 text-xl font-medium text-white">Create Todo Note</h3>
 
-                {/* create from */}
+                {/* add Note Content */}
                 <div className="space-y-6">
                     <div>
                         <label className={labelStyle}>Title</label>
-                        <input type="text" name="title" className={inputStyle} placeholder="My new note" required/>
+                        <input onChange={(e) => handleInputChange(e)} type="text" name="title" className={inputStyle} placeholder="My new note" required/>
                     </div>
                     <div>
                         <label className={labelStyle}>Description</label>
-                        <input type="text" name="description" placeholder="Some description" className={inputStyle}/>
+                        <input onChange={(e) => handleInputChange(e)} type="text" name="description" placeholder="Some description" className={inputStyle}/>
                     </div>
-                    <button onClick={() => createNote({id: uuidv4(), title: 'This is the title', description: "some stuff"})} className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Create Note</button>
+                    <button onClick={() => createNote(todoInfo)} className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Create Note</button>
                 </div>
                 {/* ------ */}
             </div>
