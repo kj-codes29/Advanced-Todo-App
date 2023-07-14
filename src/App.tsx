@@ -33,7 +33,7 @@ function App() {
   const modalProps: Modal = {isModalHidden, setIsModalHidden, addTodoNote}
 
   return (
-    <div className="flex">
+    <div className="relative flex w-screen h-screen">
       <SideBar toggleModal={toggleModal} />
 
       <TodoList todoNotes={todoNotes} removeTodoNote={removeTodoNote} modalProps={modalProps} />

@@ -11,7 +11,7 @@ type TodoListProps = {
 
 const TodoList = ({ todoNotes, removeTodoNote, modalProps }: TodoListProps) => {
   return (
-    <div className="relative bg-[#F5EFE7] grid grid-cols-3 justify-items-center overflow-auto w-screen h-100 p-4">
+    <div className="relative bg-[#F5EFE7] grid grid-cols-3 justify-items-center w-full h-full p-4">
       {todoNotes.map((todoNote) => {
         return (
           <TodoNote

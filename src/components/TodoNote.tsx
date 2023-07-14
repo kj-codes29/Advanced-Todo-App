@@ -16,8 +16,8 @@ type TodoProps = {
   remove: any
 }
 
-const closedViewMode = "flex justify-between font-bold rounded-t-lg p-3 bg-[#D8C4B6] text-[#213555]"
-const openViewMode = "flex justify-between font-bold rounded-t-lg p-3 bg-black text-white"
+const closedViewMode = "w-96 h-72 gap-10"
+const openViewMode = "absolute flex justify-center gap-10 z-50 w-full h-full bg-red-500/50"
 
 // When clicked on view note it pops up to the front
 // the Icon changes to an X
@@ -65,42 +65,45 @@ const TodoNote = ({todoInfo, remove}: TodoProps) => {
   }
 
   return (
-    <div className="w-96 h-72 gap-10 rounded-lg">
+    <div className={viewMode}>
       {/* Here comes the header of the Todo note / Title */}
       {/* Add options to the todo to be able to modify it */}
-      <div className={viewMode}>
-        <h1>{todoInfo.title}</h1>
+      <div className={`relative w-96 h-72 ${viewMode == closedViewMode? "":"translate-y-3/4 scale-125"}`}>
+        <div className="flex justify-between font-bold rounded-t-lg p-3 bg-[#D8C4B6] text-[#213555]">
+          <h1>{todoInfo.title}</h1>
 
-        {/* Note options */}
-        <div ref={dropDownRef} className='relative inline-block text-left'>
-          <button onClick={ () => toggleMenu()} type='button' id="menu-button" aria-expanded="true" aria-haspopup="true" className='duration-100 ease-in hover:text-[#F5EFE7]'>
-            <RiMore2Fill size={iconSize}/>
-          </button>
+          {/* Note options */}
+          <div ref={dropDownRef} className='relative inline-block text-left'>
+            <button onClick={ () => toggleMenu()} type='button' id="menu-button" aria-expanded="true" aria-haspopup="true" className='duration-100 ease-in hover:text-[#F5EFE7]'>
+              <RiMore2Fill size={iconSize}/>
+            </button>
 
-          {/* Drop Down Menu */}
-          <div className={`absolute left-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-[#D8C4B6] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${isMenuHidden? "hidden": ""}`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
-            <ul className="">
-              {options.map((option, operationIndex) => {
-                return (
-                <li onClick={ () => noteOperation(option.name, todoInfo.id)} key={operationIndex} 
-                    className="flex justify-between px-4 py-2 rounded-md text-[#213555] text-sm hover:bg-[#4F709C] hover:text-[#D8C4B6] hover:cursor-pointer">
-                  <span>{option.name}</span>
-                   <span>{option.icon}</span>
-                </li>
-                  )
-              })}
-            </ul>
+            {/* Drop Down Menu */}
+            <div className={`absolute left-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-[#D8C4B6] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${isMenuHidden? "hidden": ""}`} role="menu" aria-orientation="vertical" aria-labelledby="menu-button">
+              <ul className="">
+                {options.map((option, operationIndex) => {
+                  return (
+                  <li onClick={ () => noteOperation(option.name, todoInfo.id)} key={operationIndex} 
+                      className="flex justify-between px-4 py-2 rounded-md text-[#213555] text-sm hover:bg-[#4F709C] hover:text-[#D8C4B6] hover:cursor-pointer">
+                    <span>{option.name}</span>
+                    <span>{option.icon}</span>
+                  </li>
+                    )
+                })}
+              </ul>
+            </div>
+
           </div>
+          
 
         </div>
-        
 
+        {/* Here comes the body of the todo note/ Description */}
+          <div className="bg-[#213555] text-[#D8C4B6] h-full rounded-b-lg p-3">
+            {todoInfo.description}
+          </div>
       </div>
 
-      {/* Here comes the body of the todo note/ Description */}
-        <div className="bg-[#213555] text-[#D8C4B6] h-full rounded-b-lg p-3">
-          {todoInfo.description}
-        </div>
     </div>
   )
 }
